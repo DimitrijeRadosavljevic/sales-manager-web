@@ -23,7 +23,7 @@ export class AuthEffects implements OnInitEffects {
       return this.authService.identify()
         .pipe(
           map(response => {
-            this.router.navigate(['welcome']);
+            //this.router.navigate(['welcome']);
             return AuthActions.loginSuccess({data: response.data});
           }),
           catchError((error) => {
@@ -42,8 +42,7 @@ export class AuthEffects implements OnInitEffects {
         map(response => {
           if (response.token != null) {
             localStorage.setItem('token', response.token);
-          }
-          ;
+          };
           this.router.navigate(['/welcome']).then();
           this.toastrService.success('You are successfully logged in!', 'Login');
           return AuthActions.loginSuccess({data: response.data});

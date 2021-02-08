@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <table class="table" *ngIf="products && products.length>0 && loading == 0">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col"><i class="bi bi-plus-circle icon btn text-danger" routerLink="/products/addNew" data-toggle="tooltip" data-placement="top" title="Add new product"></i></th>
+            <th scope="col">Name</th>
+            <th scope="col">Code</th>
+            <th scope="col">Color</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{product.name}}</td>
+            <td>{{product.code}}</td>
+            <td>{{product.color ? product.color : '#'}}</td>
+            <td><i class="bi bi-pencil-square text-warning icon btn" (click)="goToEdit(product)"></i></td>
+          </tr>
+        </tbody>
+      </table>
+      <p *ngIf="loading == 0 && products && products.length == 0" class="text-center">You don't have any themes yet</p>
+      <div class="row justify-content-center mt-5" *ngIf="loading > 0">
+        <div class="col-1">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+    </div>
+      
+</div>
