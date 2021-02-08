@@ -55,6 +55,22 @@ export class AuthEffects implements OnInitEffects {
     )
   );
 
+  register$ = createEffect(() => this.actions$.pipe(
+    ofType(AuthActions.register),
+    mergeMap((action) => this.authService.register(action.data)
+      .pipe(
+        map(response => {
+          if (response.token != null) {
+            localStorage.setItem('token', response.token);
+          }
+          this.router.navigate(['/welcome']).then();
+          return AuthActions.registerSuccess({data: response.data});
+        }),
+        catchError((error) => of(AuthActions.registerFailure({error})))
+      ))
+    )
+  );
+
   logout$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.logout),
     map(() => {

@@ -34,3 +34,19 @@ export const logoutSuccess = createAction(
 );
 
 
+export const register = createAction(
+  '[Auth] Register',
+  props<{data: User}>()
+);
+
+export const registerSuccess = createAction(
+  '[Auth] Register Success',
+  props<{ data: any }>()
+);
+
+export const registerFailure = createAction(
+  '[Auth] Register Failure',
+  props<{ error: any }>()
+);
+
+

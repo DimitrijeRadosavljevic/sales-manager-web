@@ -14,6 +14,10 @@ export class AuthService extends BaseApiService {
     return this.http.post<ExpressResponse>(this.apiAuthUrl + '/login', data);
   }
 
+  register(data: User): Observable<ExpressResponse> {
+    return this.http.post<ExpressResponse>(this.apiAuthUrl + '/register', data);
+  }
+
   logout(): Observable<ExpressResponse> {
     return this.http.post<ExpressResponse>(this.apiAuthUrl + '/logout', null);
   }

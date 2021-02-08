@@ -1,12 +1,20 @@
 <div class="container h-100">
   <div class="row justify-content-center m-login">
     <div class="col-6">
-      <h1 class="text-primary"><b>LOGIN</b></h1>
+      <h1 class="text-primary"><b>REGISTER</b></h1>
     </div>
   </div>
   <div class="row justify-content-center m-form" *ngIf="formActive">
     <div class="col-6">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <input type="text"
+                 [ngClass]="{'form-control': true, 'is-invalid': form.controls.name.invalid && form.controls.name.touched}"
+                 id="name" formControlName="name" placeholder="Name">
+          <div class="invalid-feedback">
+            Invalid Name
+          </div>
+        </div>
         <div class="mb-3">
           <input type="email"
                  [ngClass]="{'form-control': true, 'is-invalid': form.controls.email.invalid && form.controls.email.touched}"
@@ -23,10 +31,23 @@
             Invalid password
           </div>
         </div>
+        <div class="mb-3">
+          <input type="password"
+                 [ngClass]="{'form-control': true, 'is-invalid': (form.controls.confirmPassword.invalid || form.errors?.passwordsNotMatched) && form.controls.confirmPassword.touched }"
+                 id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
+          <div class="invalid-feedback">
+            Password do not match
+          </div>
+        </div>
         <div class="row m-button">
           <div class="col-12 text-center">
-            <button type="submit" class="btn-primary mb-3">Login</button>
-            <p routerLink="/register" class="cursor-pointer">Don't have account? <u>Register here!</u></p>
+            <button type="submit" class="btn-primary mb-3">Register</button>
+            <p routerLink="/login" class="cursor-pointer">Already have account? <u>Log in!</u></p>
+          </div>
+          <div class="col-12 text-center">
+            <div class="alert alert-danger" role="alert" *ngIf="error">
+              {{ errorText }}
+            </div>
           </div>
         </div>
       </form>
