@@ -7,6 +7,7 @@ export interface AuthState {
   user: any;
   loggedIn: boolean;
   loginFail: boolean;
+  registerFail: boolean;
   isLoading: boolean;
   userAuthCheck: boolean;
   error: any;
@@ -14,6 +15,7 @@ export interface AuthState {
 
 export const initialState: AuthState = {
   loginFail: false,
+  registerFail: false,
   isLoading: false,
   userAuthCheck: false,
   error: undefined,
@@ -65,6 +67,36 @@ export const reducer = createReducer(
       user         : undefined,
       loggedIn     : false,
       userAuthCheck: false
+    })
+  ),
+
+  on(AuthActions.register,
+    (state) => ({
+      ...state, isLoading: true
+    })
+  ),
+
+  on(AuthActions.registerSuccess,
+    (state, {data}) => ({
+      ...state,
+      loginFail   : false,
+      registerFail: false,
+      isLoading   : false,
+      error       : undefined,
+      user        : data,
+      loggedIn    : true,
+    })
+  ),
+
+  on(AuthActions.registerFailure,
+    (state, {error}) => ({
+      ...state,
+      loginFail   : false,
+      registerFail: true,
+      isLoading   : false,
+      error,
+      user        : undefined,
+      loggedIn    : false,
     })
   ),
 

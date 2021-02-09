@@ -19,7 +19,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
       positionClass: 'toast-top-right',
     }),
     NgxPaginationModule,
-    RouterModule,
+    RouterModule
   ],
   exports: [
     CommonModule,

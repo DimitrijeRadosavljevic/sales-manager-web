@@ -43,7 +43,12 @@ export class AuthEffects implements OnInitEffects {
           if (response.token != null) {
             localStorage.setItem('token', response.token);
           };
-          this.router.navigate(['/welcome']).then();
+          if (response.data.owner) {
+
+          }
+          else {
+            this.router.navigate(['/seller/work']).then();
+          }
           this.toastrService.success('You are successfully logged in!', 'Login');
           return AuthActions.loginSuccess({data: response.data});
         }),
@@ -51,6 +56,22 @@ export class AuthEffects implements OnInitEffects {
           this.toastrService.error('Wrong email or password', 'Login');
           return of(AuthActions.loginFailure({error}));
         })
+      ))
+    )
+  );
+
+  register$ = createEffect(() => this.actions$.pipe(
+    ofType(AuthActions.register),
+    mergeMap((action) => this.authService.register(action.data)
+      .pipe(
+        map(response => {
+          if (response.token != null) {
+            localStorage.setItem('token', response.token);
+          }
+          this.router.navigate(['/welcome']).then();
+          return AuthActions.registerSuccess({data: response.data});
+        }),
+        catchError((error) => of(AuthActions.registerFailure({error})))
       ))
     )
   );
