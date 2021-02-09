@@ -11,6 +11,8 @@ import {AuthEffects} from './store/auth/auth.effects';
 import {SharedModule} from './_shared/shared.module';
 import {AuthModule} from './auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -24,8 +26,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([AuthEffects]),
 
+
     SharedModule,
-    AuthModule
+    AuthModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true}
