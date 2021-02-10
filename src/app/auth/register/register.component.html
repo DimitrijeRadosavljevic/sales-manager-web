@@ -1,44 +1,84 @@
 <div class="container h-100">
-  <div class="row justify-content-center m-login">
-    <div class="col-6">
+  <div class="row justify-content-center m-register">
+    <div class="col-12 text-center">
       <h1 class="text-primary"><b>REGISTER</b></h1>
     </div>
   </div>
   <div class="row justify-content-center m-form" *ngIf="formActive">
-    <div class="col-6">
+    <div class="col-12">
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-          <input type="text"
-                 [ngClass]="{'form-control': true, 'is-invalid': form.controls.name.invalid && form.controls.name.touched}"
-                 id="name" formControlName="name" placeholder="Name">
-          <div class="invalid-feedback">
-            Invalid Name
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.firstName.invalid && form.controls.firstName.touched}"
+                     id="firstname" formControlName="firstName" placeholder="First Name">
+              <div class="invalid-feedback">
+                First name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.middleName.invalid && form.controls.middleName.touched}"
+                     id="middleName" formControlName="middleName" placeholder="Middle Name">
+              <div class="invalid-feedback">
+                Middle name is required
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <input type="email"
-                 [ngClass]="{'form-control': true, 'is-invalid': form.controls.email.invalid && form.controls.email.touched}"
-                 id="email" formControlName="email" placeholder="Email">
-          <div class="invalid-feedback">
-            Invalid email
+
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.lastName.invalid && form.controls.lastName.touched}"
+                     id="lastName" formControlName="lastName" placeholder="Last Name">
+              <div class="invalid-feedback">
+                Last name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-3">
+              <input type="email"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.email.invalid && form.controls.email.touched}"
+                     id="email" formControlName="email" placeholder="Email">
+              <div class="invalid-feedback">
+                Invalid email
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <input type="password"a
-                 [ngClass]="{'form-control': true, 'is-invalid': form.controls.password.invalid && form.controls.password.touched}"
-                 id="password" formControlName="password" placeholder="Password">
-          <div class="invalid-feedback">
-            Invalid password
+
+
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-3">
+              <input type="password"a
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.password.invalid && form.controls.password.touched}"
+                     id="password" formControlName="password" placeholder="Password">
+              <div class="invalid-feedback">
+                Invalid password
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="mb-3">
+              <input type="password"
+                     [ngClass]="{'form-control': true, 'is-invalid': (form.controls.confirmPassword.invalid || form.errors?.passwordsNotMatched) && form.controls.confirmPassword.touched }"
+                     id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
+              <div class="invalid-feedback">
+                Password do not match
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <input type="password"
-                 [ngClass]="{'form-control': true, 'is-invalid': (form.controls.confirmPassword.invalid || form.errors?.passwordsNotMatched) && form.controls.confirmPassword.touched }"
-                 id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
-          <div class="invalid-feedback">
-            Password do not match
-          </div>
-        </div>
+
+
         <div class="row m-button">
           <div class="col-12 text-center">
             <button type="submit" class="btn-primary mb-3">Register</button>

@@ -1,0 +1,317 @@
+<div class="container-fluid">
+
+  <div class="row mt-5">
+    <div class="col-12 text-left">
+      <h1 *ngIf="employeeId">Update Employee</h1>
+      <h1 *ngIf="!employeeId" class="d-inline">Create Employee</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="formActive">
+
+        <div class="row">
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="firstname" class="form-label">First Name</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.firstName.invalid && form.controls.firstName.touched}"
+                     id="firstname" formControlName="firstName" placeholder="First Name">
+              <div class="invalid-feedback">
+                First name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="middleName" class="form-label">Middle Name</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.middleName.invalid && form.controls.middleName.touched}"
+                     id="middleName" formControlName="middleName" placeholder="Middle Name">
+              <div class="invalid-feedback">
+                Middle name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.lastName.invalid && form.controls.lastName.touched}"
+                     id="lastName" formControlName="lastName" placeholder="Last Name">
+              <div class="invalid-feedback">
+                Last name is required
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.email.invalid && form.controls.email.touched}"
+                     id="email" formControlName="email" placeholder="Email">
+              <div class="invalid-feedback">
+                Invalid email
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password"a
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.password.invalid && form.controls.password.touched}"
+                     id="password" formControlName="password" placeholder="Password">
+              <div class="invalid-feedback">
+                Invalid password
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password"
+                     [ngClass]="{'form-control': true, 'is-invalid': (form.controls.confirmPassword.invalid || form.errors?.passwordsNotMatched) && form.controls.confirmPassword.touched }"
+                     id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
+              <div class="invalid-feedback">
+                Password do not match
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="employeeNumber" class="form-label">Employee Number</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.employeeNumber.invalid && form.controls.employeeNumber.touched }"
+                     id="employeeNumber" formControlName="employeeNumber" placeholder="Employee Number">
+              <div class="invalid-feedback">
+                Employee number is required
+              </div>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="role" class="form-label">Role</label>
+              <select
+                [ngClass]="{'form-control': true, 'is-invalid': form.controls.role.invalid && form.controls.role.touched }"
+                id="role" formControlName="role">
+                <option value="junior">Junior</option>
+                <option value="medior">Medior</option>
+                <option value="senior">Senior</option>
+                <option value="head-seller">Head Seller</option>
+              </select>
+              <div class="invalid-feedback">
+                Role is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="startedWorking" class="form-label">Started Working</label>
+              <input type="date"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.startedWorking.invalid && form.controls.startedWorking.touched }"
+                     id="startedWorking" formControlName="employeeNumber" placeholder="Started Working">
+              <div class="invalid-feedback">
+                Started working is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-12">
+            <h3 class="d-inline me-3">Addresses</h3>
+            <button class="btn btn-outline-danger ml-5" type="button" (click)="addAddress()">Add Address</button>
+          </div>
+        </div>
+        <div class="row" *ngFor="let addressesForm of addressesForms.controls">
+          <div class="col">
+            <div class="mb-3">
+              <label class="form-label">Street</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true}"
+                     [formControl]="addressesForm.get('street')">
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label class="form-label">City</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true}"
+                     [formControl]="addressesForm.get('city')">
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label class="form-label">Country</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true}"
+                     [formControl]="addressesForm.get('country')">
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label class="form-label">Postal Code</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true}"
+                     [formControl]="addressesForm.get('postalCode')">
+            </div>
+          </div>
+          <div class="col-12" *ngIf="addressesForm.errors?.addressRequired">
+            <p class="text-danger">Address is required</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-12">
+            <h3 class="d-inline me-3">Contacts</h3>
+            <button class="btn btn-outline-danger ml-5" type="button" (click)="addContact()">Add Contact</button>
+          </div>
+        </div>
+        <div class="row" *ngFor="let contactForm of contactsForms.controls">
+          <div class="col">
+            <div class="mb-3">
+              <label class="form-label">Type</label>
+              <select
+                    [ngClass]="{'form-control': true, 'is-invalid': contactForm.get('type').invalid && contactForm.get('type').touched }"
+                    [formControl]="contactForm.get('type')">
+                <option value="number">Number</option>
+                <option value="email">Email</option>
+              </select>
+              <div class="invalid-feedback">
+                Type is required
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label class="form-label">Value</label>
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': contactForm.get('value').invalid && contactForm.get('value').touched}"
+                     [formControl]="contactForm.get('value')">
+              <div class="invalid-feedback">
+                Value is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <hr>
+
+        <div class="row">
+          <div class="col-12">
+            <h3 class="d-inline me-3">Promotions</h3>
+            <button class="btn btn-outline-danger ml-5" type="button" (click)="addPromotion()">Add Promotion</button>
+          </div>
+        </div>
+        <div class="row" *ngFor="let promotionForm of promotionsForms.controls">
+          <div class="col-3">
+            <div class="mb-3">
+              <label class="form-label">Date</label>
+              <input type="date"
+                     [ngClass]="{'form-control': true, 'is-invalid': promotionForm.get('date').invalid && promotionForm.get('date').touched }"
+                     [formControl]="promotionForm.get('date')">
+              <div class="invalid-feedback">
+                Promotion date is required
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label class="form-label">New Role</label>
+              <select
+                [ngClass]="{'form-control': true, 'is-invalid': promotionForm.get('newRole').invalid && promotionForm.get('newRole').touched }"
+                [formControl]="promotionForm.get('newRole')">
+                <option value="junior">Junior</option>
+                <option value="medior">Medior</option>
+                <option value="senior">Senior</option>
+                <option value="head-seller">Head Seller</option>
+              </select>
+              <div class="invalid-feedback">
+                New role is required
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Note</label>
+            <textarea rows="3"
+                      [ngClass]="{'form-control': true, 'is-invalid': promotionForm.get('note').invalid && promotionForm.get('note').touched }"
+                      [formControl]="promotionForm.get('note')" placeholder="Note">
+
+            </textarea>
+          </div>
+
+        </div>
+
+        <hr>
+
+
+        <div class="row">
+          <div class="col-12">
+            <h3 class="d-inline me-3">Vacations</h3>
+            <button class="btn btn-outline-danger ml-5" type="button" (click)="addVacation()">Add Vacation</button>
+          </div>
+        </div>
+        <div class="row" *ngFor="let vacationForm of vacationsForms.controls">
+          <div class="col-3">
+            <div class="mb-3">
+              <label class="form-label">From</label>
+              <input type="date"
+                     [ngClass]="{'form-control': true, 'is-invalid': vacationForm.get('from').invalid && vacationForm.get('from').touched }"
+                     [formControl]="vacationForm.get('from')">
+              <div class="invalid-feedback">
+                From date is required
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label class="form-label">To</label>
+              <input type="date"
+                     [ngClass]="{'form-control': true, 'is-invalid': vacationForm.get('to').invalid && vacationForm.get('to').touched }"
+                     [formControl]="vacationForm.get('to')">
+              <div class="invalid-feedback">
+                To date is required
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label class="form-label">Note</label>
+            <textarea rows="3"
+                      [ngClass]="{'form-control': true, 'is-invalid': vacationForm.get('note').invalid && vacationForm.get('note').touched }"
+                      [formControl]="vacationForm.get('note')" placeholder="Note">
+
+            </textarea>
+          </div>
+
+        </div>
+
+        <hr>
+
+
+        <div class="row">
+          <div class="col-12 text-center">
+            <button class="btn btn-primary" [disabled]="form.invalid || !form.touched">{{ employeeId ? 'Update' : 'Save' }}</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

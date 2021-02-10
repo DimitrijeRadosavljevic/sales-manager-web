@@ -44,7 +44,7 @@ export class AuthEffects implements OnInitEffects {
             localStorage.setItem('token', response.token);
           };
           if (response.data.owner) {
-
+            this.router.navigate(['/employees']).then();
           }
           else {
             this.router.navigate(['/seller/work']).then();
@@ -68,7 +68,7 @@ export class AuthEffects implements OnInitEffects {
           if (response.token != null) {
             localStorage.setItem('token', response.token);
           }
-          this.router.navigate(['/welcome']).then();
+          this.router.navigate(['/employees']).then();
           return AuthActions.registerSuccess({data: response.data});
         }),
         catchError((error) => of(AuthActions.registerFailure({error})))
