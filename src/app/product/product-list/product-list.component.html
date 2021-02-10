@@ -1,17 +1,19 @@
 <div class="container-fluid">
-    <table class="table" *ngIf="products && products.length>0 && loading == 0">
+    <table class="table">
         <thead class="table-primary">
           <tr>
             <th scope="col"><i class="bi bi-plus-circle icon btn text-danger" routerLink="/products/addNew" data-toggle="tooltip" data-placement="top" title="Add new product"></i></th>
+            <th scope="col">Image</th>
             <th scope="col">Name</th>
             <th scope="col">Code</th>
             <th scope="col">Color</th>
             <th scope="col">Edit</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="products && products.length>0 && loading == 0">
           <tr *ngFor="let product of products; let i = index">
-            <th scope="row">{{i+1}}</th>
+            <th scope="row" class="pt-4 align-items-center">{{i+1}}</th>
+            <th scope="row"><img [src]="product.imagePath" alt="" height="70px" width="70px"></th>
             <td>{{product.name}}</td>
             <td>{{product.code}}</td>
             <td>{{product.color ? product.color : '#'}}</td>
@@ -19,7 +21,7 @@
           </tr>
         </tbody>
       </table>
-      <p *ngIf="loading == 0 && products && products.length == 0" class="text-center">You don't have any themes yet</p>
+      <p *ngIf="loading == 0 && products && products.length == 0" class="text-center">You don't have any products yet</p>
       <div class="row justify-content-center mt-5" *ngIf="loading > 0">
         <div class="col-1">
             <div class="spinner-border text-primary" role="status"></div>
