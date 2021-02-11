@@ -5,6 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ToastrModule} from 'ngx-toastr';
 import {RouterModule} from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {MatListModule} from '@angular/material/list';
 
 
 
@@ -19,13 +20,15 @@ import {NgxPaginationModule} from 'ngx-pagination';
       positionClass: 'toast-top-right',
     }),
     NgxPaginationModule,
-    RouterModule
+    RouterModule,
+    MatListModule
   ],
   exports: [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    MatListModule
   ]
 })
 export class SharedModule { }
