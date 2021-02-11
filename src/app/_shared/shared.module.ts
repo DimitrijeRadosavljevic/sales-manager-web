@@ -6,6 +6,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {RouterModule} from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {MatListModule} from '@angular/material/list';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -21,14 +22,16 @@ import {MatListModule} from '@angular/material/list';
     }),
     NgxPaginationModule,
     RouterModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
   exports: [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ]
 })
 export class SharedModule { }
