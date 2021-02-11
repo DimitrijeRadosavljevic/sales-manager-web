@@ -2,8 +2,12 @@ export class Product {
     _id: string;
     name: string; 
     code: string;
-    dimension: { height: number, width: number}
+    dimensions: { x: number, y: number, z: number}
     color: string;
-    imagePath: any
+    imagePath: any;
+    staffSalePrice: number;
+    staffSaleType: number;
+    quantity: number;
+    homeDelivery: boolean;
 
 }

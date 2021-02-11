@@ -17,9 +17,10 @@
 
     <div class="row mt-5">
         <div class="col-lg-12 d-flex justify-content-center">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="formActive" class="form">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="formActive" class="form mb-3">
                 <div class="row">
                     <div class="col-lg-6">
+                      <label for="name">Name</label>
                         <input type="text"
                                 [ngClass]= "{'form-control': true, 'bg-transparent': true, 'is-invalid': form.controls.name.invalid && form.controls.name.touched }"
                                 id = "name"
@@ -30,6 +31,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
+                      <label for="code">Code</label>
                         <input type="text"
                                 [ngClass]= "{'form-control': true, 'bg-transparent': true, 'is-invalid': form.controls.code.invalid && form.controls.code.touched }"
                                 id = "code"
@@ -42,25 +44,122 @@
                 </div>
                 <div class="row mt-3" *ngIf="imageSelected">
                     <div class="col-lg-12 text-center">
-                        <img [src]="imageSelected" [alt]="">
+                        <img [src]="imageSelected" [alt]="" width="80px" height="80px">
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-3">
                     <div class="col-lg-12 text-center">
                       <input type="file" (change)="onImageSelect($event)" name="file">  
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col-12 text-center">
-                      <button type="submit" class="button bg-light">Create</button>
-                    </div>
-                  </div>
 
-                  <div class="row" *ngIf="createdProduct">
+                  <!-- <div class="row" *ngIf="createdProduct"> 
                       <div class="col-lg-12">
                           <img [src]="createdProduct.imagePath" alt="">
                       </div>
+                  </div> -->
+
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <label for="code">Dimensions</label>
+                      <div class="row">
+                        <div class="col-lg-3">
+                          <input type="number"
+                                  id = "d-x"
+                                  class="form-control bg-transparent"
+                                  formControlName = "dx"
+                                  placeholder = "0.0"
+                                  step="0.1">
+                        </div>
+                        <div class="col-lg-1 pt-2">
+                         <span>X</span>
+                        </div>
+                        <div class="col-lg-3">
+                          <input type="number"
+                                  id = "d-y"
+                                  class="form-control bg-transparent"
+                                  formControlName = "dy"
+                                  placeholder = "0.0"
+                                  step="0.1">
+                        </div>
+                        <div class="col-lg-1 pt-2">
+                          <span>X</span>
+                         </div>
+                        <div class="col-lg-3">
+                          <input type="number"
+                                  id = "d-z"
+                                  class="form-control bg-transparent"
+                                  formControlName = "dz"
+                                  placeholder = "0.0"
+                                  step="0.1">
+                        </div>
+                      </div>
+                     </div>
+                    <div class="col-lg-6">
+                      <label for="code">Color</label>
+                        <input type="text"
+                                [ngClass]= "{'form-control': true, 'bg-transparent': true }"
+                                id = "color"
+                                formControlName = "color"
+                                placeholder = "Color">
+                    </div>
                   </div>
+                  <div class="row mt-3">
+                    <div class="col-lg-6">
+                      <label>Sale price</label>
+                      <input type="number"
+                      [ngClass]= "{'form-control': true, 'bg-transparent': true, 'is-invalid': form.controls.staffSalePrice.invalid && form.controls.staffSalePrice.touched }"
+                      id = "salePrice"
+                      class="form-control bg-transparent"
+                      formControlName = "staffSalePrice"
+                      placeholder = "Price"
+                      step="1"
+                      min="0">
+                      <div class="invalid-feedback">
+                        Sale price is required
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <label>Sale type</label>
+                      <div>
+                        <select 
+                          name="saleType" 
+                          id="saleType" 
+                          formControlName="staffSaleType"
+                          [ngClass]= "{'form-control': true, 'bg-transparent': true, 'is-invalid': form.controls.staffSaleType.invalid && form.controls.staffSaleType.touched }">
+                          <option value="Monetary">Monetary</option>
+                          <option value="Quantity">Quantity</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          Sale type is required
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-lg-6 d-flex align-items-center">
+                      <input class="form-check-input mr-2" type="checkbox" id="gridCheck" formControlName = "homeDelivery">
+                      <label class="form-check-label" for="gridCheck"> - Home delivery</label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label>Qunatity</label>
+                      <input type="number"
+                      [ngClass]= "{'form-control': true, 'bg-transparent': true}"
+                      id = "quantity"
+                      formControlName = "quantity"
+                      placeholder = "quantity"
+                      step="1"
+                      min="0">
+                    </div>
+                  </div>
+
+                  <div class="row mt-5">
+                    <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-primary">{{ productId ? 'Update' : 'Create' }}</button>
+                      <button class="btn btn-light ml-2" routerLink="/products">Back</button>
+                    </div>
+                  </div>
+                 
             </form>
         </div>
     </div>

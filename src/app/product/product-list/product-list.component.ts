@@ -1,7 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { ProductService } from './../product.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/_shared/models/product';
 import { Router } from '@angular/router';
+import {PaginatePipeArgs} from 'ngx-pagination/dist/paginate.pipe';
 
 @Component({
   selector: 'app-product-list',
@@ -10,10 +12,19 @@ import { Router } from '@angular/router';
 })
 export class ProductListComponent implements OnInit {
 
-  public products: Product[];// = [{id: "3", name: "Product1", code: "354354", color: "orange", dimension: { height: 354, width: 354}}, {id: "3", name: "Product1", code: "354354", color: "orange", dimension: { height: 354, width: 354}}, {id: "3", name: "Product1", code: "354354", color: "orange", dimension: { height: 354, width: 354}}];
+  public products: Product[];
   public loading: number = 0;
   public products354: Product[];
-  constructor(private productService: ProductService, private router: Router) { }
+  public paginationConfig: PaginatePipeArgs = {
+    id: 'products',
+    itemsPerPage: 6,
+    currentPage: 1
+  };
+  public productForDelete: Product;
+
+  constructor(private productService: ProductService, 
+              private router: Router,
+              private toastrService: ToastrService) { }
 
   ngOnInit(): void {
     this.initializeComponent();
@@ -25,9 +36,10 @@ export class ProductListComponent implements OnInit {
 
   public getProducts() {
     this.loading++;
-    this.productService.getProducts().subscribe(
+    this.productService.getProducts(this.paginationConfig.itemsPerPage, this.paginationConfig.currentPage).subscribe(
       response => {
-        this.products = response.data;
+        this.paginationConfig.totalItems = response.data.total;
+        this.products = response.data.products as Product[];
         console.log(this.products);
       },
       error => { 
@@ -39,6 +51,49 @@ export class ProductListComponent implements OnInit {
 
   public goToEdit(product: Product) {
     this.router.navigate([`/products/${product._id}`]);
+  }
+
+  public onPageChange($event) {
+    this.paginationConfig.currentPage = $event;
+    this.getProducts();
+  }
+
+  public setProductForDelete(product: Product) {
+    this.productForDelete = product;
+  }
+  
+  public onDeleteProduct() {
+    if(!this.productForDelete)
+      return
+    this.loading++;
+    this.productService.deleteProduct(this.productForDelete._id).subscribe(
+      response => {
+        this.toastrService.success("Product successfully deleted");
+        this.getProducts();
+      },
+      error => {
+        this.toastrService.error("Some error ocured please try leater");
+      },
+      () => {
+        this.loading--;
+      }
+    )
+  }
+
+  public delete(product) {
+    this.loading++;
+    this.productService.deleteProduct(product._id).subscribe(
+      response => {
+        this.toastrService.success("Product successfully deleted");
+        this.getProducts();
+      },
+      error => {
+        this.toastrService.error("Some error ocured please try leater");
+      },
+      () => {
+        this.loading--;
+      }
+    )
   }
 
 }

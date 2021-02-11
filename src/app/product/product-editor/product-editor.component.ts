@@ -1,7 +1,8 @@
+import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ProductService } from './../product.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/_shared/models/product';
 
 @Component({
@@ -19,7 +20,9 @@ export class ProductEditorComponent implements OnInit {
   public createdProduct: Product;
   constructor(private route: ActivatedRoute,
               private productService: ProductService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private toastrService: ToastrService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.initializeComponent();
@@ -53,19 +56,48 @@ export class ProductEditorComponent implements OnInit {
       name: [product ? product.name : null, Validators.required],
       color: [product ? product.color : null],
       code: [product ? product.code : null, Validators.required],
-      image: new FormControl(null)
+      image: new FormControl(null),
+      dx: [product ? product.dimensions.x : null],
+      dy: [product ? product.dimensions.x : null],
+      dz: [product ? product.dimensions.x : null],
+      staffSalePrice: [product ? product.staffSalePrice : null, Validators.required],
+      staffSaleType: [product ? product.staffSaleType : null, Validators.required],
+      homeDelivery: [product ? product.homeDelivery : false],
+      quantity: [product ? product.quantity : null]
     })
     this.formActive = true;
   }
 
   public onSubmit() {
+    if(this.form.invalid) {
+      this.form.markAllAsTouched()
+      return
+    }
 
-    this.productService.postProduct(this.form.value as Product, this.form.value.image).subscribe(
-      response => {
-        this.createdProduct = response.data;
-        console.log(this.createdProduct);
-      }
-    )
+    if(!this.productId) {
+      const productForCreation: Product = { ...this.form.value, dimensions: { x: this.form.value.dx, y: this.form.value.dy, z: this.form.value.dz }}
+      this.productService.postProduct(productForCreation, this.form.value.image).subscribe(
+        response => {
+          //this.createdProduct = response.data;
+          this.toastrService.success("Product successfully created");
+          this.router.navigate(['/products']);
+        },
+        error => {
+          this.toastrService.error("Some error ocured please try leater");
+        }
+      )
+    } else {
+      const productForUpdate: Product = { ...this.form.value, dimensions: {  x: this.form.value.dx, y: this.form.value.dy, z: this.form.value.dz }, imagePath: this.productForUpdate.imagePath }
+      this.productService.updateProduct(productForUpdate, this.form.value.image).subscribe(
+        response => {
+          this.toastrService.success("Product successfully updated")
+          this.router.navigate([`/products/${response.data._id}`]);
+        },
+        error => {
+          this.toastrService.error("Some error ocured please try leater");
+        }
+      )
+    }
   }
 
   public onImageSelect(event: Event) {
