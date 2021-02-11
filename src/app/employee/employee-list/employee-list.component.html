@@ -1,27 +1,36 @@
-<h2 class="d-inline me-3">Employees</h2>
+<div class="container mt-5">
 
-<button class="btn btn-primary" routerLink="/employees/create">Create Employee</button>
+  <h2 class="d-inline me-3">My Employees</h2>
+  <button class="btn btn-primary" routerLink="/employees/create">Create Employee</button>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Employee number</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees; index as i">
+        <th scope="row">{{ paginationConfig.currentPage * i + 1 }}</th>
+        <td>{{ employee.employeeNumber }}</td>
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.lastName }}</td>
+        <td>{{ employee.email }}</td>
+        <td class="text-center">
+          <a class="btn text-edit cursor-pointer" routerLink="/employees/{{employee._id}}/edit">Edit</a>
+          |
+          <a class="btn text-danger cursor-pointer" (click)="openDeleteEmployeeDialog(employee._id)">
+            Delete
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Employee number</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees; index as i">
-      <th scope="row">{{ paginationConfig.currentPage * i + 1 }}</th>
-      <td>{{ employee.employeeNumber }}</td>
-      <td>{{ employee.firstName }}</td>
-      <td>{{ employee.lastName }}</td>
-      <td>{{ employee.email }}</td>
-      <td><span class="text-edit cursor-pointer" routerLink="/employees/{{employee._id}}/edit">Edit</span> | <span class="text-danger">Delete</span></td>
-    </tr>
-  </tbody>
-</table>

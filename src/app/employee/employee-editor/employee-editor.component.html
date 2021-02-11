@@ -121,7 +121,7 @@
               <label for="startedWorking" class="form-label">Started Working</label>
               <input type="date"
                      [ngClass]="{'form-control': true, 'is-invalid': form.controls.startedWorking.invalid && form.controls.startedWorking.touched }"
-                     id="startedWorking" formControlName="employeeNumber" placeholder="Started Working">
+                     id="startedWorking" formControlName="startedWorking" placeholder="Started Working">
               <div class="invalid-feedback">
                 Started working is required
               </div>
@@ -305,7 +305,7 @@
         <hr>
 
 
-        <div class="row">
+        <div class="row mb-5">
           <div class="col-12 text-center">
             <button class="btn btn-primary" [disabled]="form.invalid || !form.touched">{{ employeeId ? 'Update' : 'Save' }}</button>
           </div>
