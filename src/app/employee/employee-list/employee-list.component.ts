@@ -18,6 +18,7 @@ export class EmployeeListComponent implements OnInit {
   employeeToDelete: string;
 
   paginationConfig = {
+    id: 'employees',
     itemsPerPage: 10,
     currentPage: 1,
     totalItems: null
@@ -42,7 +43,7 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getEmployees(this.paginationConfig.currentPage, this.paginationConfig.itemsPerPage).subscribe(
       result => {
         this.paginationConfig.totalItems = result.data.total;
-        this.employees = result.data;
+        this.employees = result.data.docs;
       },
       error => {
       },

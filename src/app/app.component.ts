@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {State} from './store';
+import {logout} from './store/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +14,8 @@ export class AppComponent implements OnInit {
 
   public showSidebar: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private store: Store<State>) {
   }
 
   ngOnInit(): void {
@@ -26,5 +30,9 @@ export class AppComponent implements OnInit {
                             this.router.url === '/seller/work');
       }
     });
+  }
+
+  public logout(): void {
+    this.store.dispatch(logout());
   }
 }
