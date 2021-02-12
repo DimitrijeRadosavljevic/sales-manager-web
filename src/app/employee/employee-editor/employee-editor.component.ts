@@ -51,7 +51,7 @@ export class EmployeeEditorComponent implements OnInit {
 
   private buildForm(employee?: Employee): void {
     this.form = this.formBuilder.group({
-      id: [employee ? employee._id : null],
+      _id: [employee ? employee._id : null],
       firstName: [employee ? employee.firstName : null, [Validators.required]],
       middleName: [employee ? employee.middleName : null],
       lastName: [employee ? employee.lastName : null, [Validators.required]],

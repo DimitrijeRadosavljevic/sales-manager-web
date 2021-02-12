@@ -10,7 +10,7 @@ import {Employee} from '../_shared/models/employee';
 })
 export class EmployeeService extends BaseApiService {
 
-  public getEmployees(perPage?: number | string, page?: number | string): Observable<ExpressResponse> {
+  public getEmployees(page?: number | string, perPage?: number | string, ): Observable<ExpressResponse> {
     let params = new HttpParams();
 
     params = (page ? params.set('page', page.toString()) : params);
