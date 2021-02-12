@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
   },
   {
+    path: 'orders',
+    loadChildren: () => import('./order/order.module').then(m => m.OrderModule)
+  },
+  {
     path: 'employees',
     loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)
   },

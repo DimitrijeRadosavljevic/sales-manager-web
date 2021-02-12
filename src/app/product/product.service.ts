@@ -34,8 +34,13 @@ export class ProductService extends BaseApiService {
     return this.http.post<ExpressResponse<Product>>(`${this.apiUrl}/products`, productData);
   }
 
-  public deleteProduct(productId: string):Observable<ExpressResponse> {
-    return this.http.delete<ExpressResponse>(`${this.apiUrl}/products/${productId}`);
+  public deleteProduct(product: Product):Observable<ExpressResponse> {
+
+    let params = new HttpParams();
+
+    params = (product ? params.set('imagePath', product.imagePath.toString()) : params)
+
+    return this.http.delete<ExpressResponse>(`${this.apiUrl}/products/${product._id}`, { params });
   }
 
   public updateProduct(product: Product, image: File):Observable<ExpressResponse<Product>> {

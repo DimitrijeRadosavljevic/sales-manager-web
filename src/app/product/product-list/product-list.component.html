@@ -1,5 +1,10 @@
-<div class="container-fluid">
-    <table class="table">
+<div class="container">
+  <div class="rorw mt-3">
+    <div class="col-lg-12 text-center h1">
+      Products
+    </div>
+  </div>
+    <table class="table mt-3">
         <thead class="table-primary">
           <tr>
             <th scope="col"><i class="bi bi-plus-circle icon btn text-danger" routerLink="/products/addNew" data-toggle="tooltip" data-placement="top" title="Add new product"></i></th>
@@ -27,7 +32,7 @@
             <td class="t-td text-center ">{{product.staffSaleType}}</td>
             <td class="t-td text-center ">{{product.homeDelivery ? 'Yes' : 'No'}}</td>
             <td class="t-td text-center ">{{product.quantity}}</td>
-            <td class="t-td-action text-center"><i class="bi bi-pencil-square text-warning icon btn" (click)="goToEdit(product)"></i><i class="bi bi-trash text-danger icon btn" data-toggle="modal" data-target="#deleteModal" (click)="setProductForDelete(product)"></i> <button (click)="delete(product)">Delete Test</button></td>
+            <td class="t-td-action text-center"><i class="bi bi-pencil-square text-warning icon btn" (click)="goToEdit(product)"></i><i class="bi bi-trash text-danger icon btn" (click)="onDeleteProduct(product)"></i></td>
           </tr>
         </tbody>
       </table>

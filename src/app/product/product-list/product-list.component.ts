@@ -1,6 +1,8 @@
+import { ProductDeleteDialogComponent } from './../product-delete-dialog/product-delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ProductService } from './../product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Product } from 'src/app/_shared/models/product';
 import { Router } from '@angular/router';
 import {PaginatePipeArgs} from 'ngx-pagination/dist/paginate.pipe';
@@ -24,7 +26,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(private productService: ProductService, 
               private router: Router,
-              private toastrService: ToastrService) { }
+              private toastrService: ToastrService,
+              private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.initializeComponent();
@@ -62,38 +65,15 @@ export class ProductListComponent implements OnInit {
     this.productForDelete = product;
   }
   
-  public onDeleteProduct() {
-    if(!this.productForDelete)
-      return
-    this.loading++;
-    this.productService.deleteProduct(this.productForDelete._id).subscribe(
-      response => {
-        this.toastrService.success("Product successfully deleted");
-        this.getProducts();
-      },
-      error => {
-        this.toastrService.error("Some error ocured please try leater");
-      },
-      () => {
-        this.loading--;
-      }
-    )
-  }
+  public onDeleteProduct(product: Product) {
+    const deleteEvent = new EventEmitter<string>();
+    deleteEvent.subscribe(productId=> {
+      this.products = this.products.filter(product => product._id !== productId);
+    })
 
-  public delete(product) {
-    this.loading++;
-    this.productService.deleteProduct(product._id).subscribe(
-      response => {
-        this.toastrService.success("Product successfully deleted");
-        this.getProducts();
-      },
-      error => {
-        this.toastrService.error("Some error ocured please try leater");
-      },
-      () => {
-        this.loading--;
-      }
-    )
+    const dialogRef = this.matDialog.open(ProductDeleteDialogComponent);
+    dialogRef.componentInstance.product = product;
+    dialogRef.componentInstance.onDeleteEvent = deleteEvent;
   }
 
 }
