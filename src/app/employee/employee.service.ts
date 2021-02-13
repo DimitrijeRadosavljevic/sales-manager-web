@@ -10,12 +10,14 @@ import {Employee} from '../_shared/models/employee';
 })
 export class EmployeeService extends BaseApiService {
 
-  public getEmployees(page?: number | string, perPage?: number | string, ): Observable<ExpressResponse> {
+  public getEmployees(page?: number | string, perPage?: number | string, filter?: string): Observable<ExpressResponse> {
     let params = new HttpParams();
 
     params = (page ? params.set('page', page.toString()) : params);
 
     params = (perPage ? params.set('perPage', perPage.toString()) : params);
+
+    params = (perPage ? params.set('filter', filter) : params);
 
     return this.http.get<ExpressResponse>(`${this.apiUrl}/employees`, { params });
   }

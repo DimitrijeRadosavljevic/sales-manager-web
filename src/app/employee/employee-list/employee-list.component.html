@@ -1,10 +1,17 @@
 <div class="container mt-5">
 
   <h2 class="d-inline me-3">My Employees</h2>
-  <button class="btn btn-primary" routerLink="/employees/create">Create Employee</button>
+  <button class="btn btn-primary" routerLink="/employees/create">Create</button>
+
+  <div class="row mt-2 mb-2">
+    <div class="col-12">
+      <label>Filter</label>
+      <input type="text" [formControl]="filter" class="form-control">
+    </div>
+  </div>
 
   <table class="table mt-4">
-    <thead>
+    <thead class="bg-primary text-white">
       <tr>
         <th>#</th>
         <th>Employee number</th>

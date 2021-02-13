@@ -1,14 +1,11 @@
 <mat-sidenav-container class="example-container h-100">
-  <mat-sidenav #sidenav mode="side" [opened]="showSidebar" class="example-sidenav" [fixedInViewport]="true">
+  <mat-sidenav #sidenav mode="side" [opened]="showSidebar" class="example-sidenav5" style="width: 200px" [fixedInViewport]="true">
     <mat-list class="cursor-pointer">
-      <mat-list-item>
+      <mat-list-item class="mt-3 mb-3 ps-3">
         <h2>Sales Manager</h2>
       </mat-list-item>
-      <mat-list-item routerLink="/employees" routerLinkActive="bg-primary text-white">Employyes</mat-list-item>
-      <mat-list-item routerLink="/products" routerLinkActive="bg-primary text-white">Products</mat-list-item>
-      <mat-list-item routerLink="/orders" routerLinkActive="bg-primary text-white">Orders</mat-list-item>
-      <mat-list-item routerLink="/reports" routerLinkActive="bg-primary text-white">Reports</mat-list-item>
-      <mat-list-item routerLinkActive="bg-primary text-white" (click)="logout()">Logout</mat-list-item>
+      <mat-list-item class="ps-3" [routerLink]="page.link" routerLinkActive="bg-primary text-white" *ngFor="let page of pages">{{ page.title }}</mat-list-item>
+      <mat-list-item class="ps-3" routerLinkActive="bg-primary text-white" (click)="logout()">Logout</mat-list-item>
     </mat-list>
   </mat-sidenav>
 
