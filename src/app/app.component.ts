@@ -14,20 +14,58 @@ export class AppComponent implements OnInit {
 
   public showSidebar: boolean;
 
+  public pages = [];
+
+  public employeePages = [
+    {
+      title: 'Work',
+      link: '/seller/work'
+    },
+    {
+      title: 'Order',
+      link: '/seller/order'
+    }
+  ];
+
+  public ownerPages = [
+    {
+      title: 'Employees',
+      link: '/employees'
+    },
+    {
+      title: 'Products',
+      link: '/products'
+    },
+    {
+      title: 'Orders',
+      link: '/orders'
+    },
+    {
+      title: 'Reports',
+      link: '/reports'
+    }
+  ];
+
   constructor(private router: Router,
               private store: Store<State>) {
   }
 
   ngOnInit(): void {
-    this.subscribeToShowSidebar()
+    this.subscribeToShowSidebar();
   }
 
   private subscribeToShowSidebar(): void {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showSidebar = !(this.router.url === '/login' ||
-                            this.router.url === '/register' ||
-                            this.router.url === '/seller/work');
+                            this.router.url === '/register');
+      }
+
+      if (this.router.url.includes('seller')) {
+        this.pages = this.employeePages;
+      }
+      else {
+        this.pages = this.ownerPages;
       }
     });
   }

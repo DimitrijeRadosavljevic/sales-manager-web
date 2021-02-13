@@ -5,6 +5,8 @@ import {Employee} from '../../_shared/models/employee';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeDeleteDialogComponent} from '../employee-delete-dialog/employee-delete-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {FormControl} from '@angular/forms';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 
 
 @Component({
@@ -16,6 +18,7 @@ export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
   loading: number = 0;
   employeeToDelete: string;
+  filter: FormControl;
 
   paginationConfig = {
     id: 'employees',
@@ -35,12 +38,24 @@ export class EmployeeListComponent implements OnInit {
   }
 
   private initializeComponent(): void {
+    this.buildFilter();
     this.fetchEmployees();
+  }
+
+  private buildFilter(): void {
+    this.filter = new FormControl('');
+    this.filter.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged())
+      .subscribe(value => {
+        this.fetchEmployees();
+      });
   }
 
   private fetchEmployees(): void {
     this.loading++;
-    this.employeeService.getEmployees(this.paginationConfig.currentPage, this.paginationConfig.itemsPerPage).subscribe(
+    this.employeeService.getEmployees(this.paginationConfig.currentPage, this.paginationConfig.itemsPerPage, this.filter.value).subscribe(
       result => {
         this.paginationConfig.totalItems = result.data.total;
         this.employees = result.data.docs;
