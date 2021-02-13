@@ -18,6 +18,6 @@ export class ReportService extends BaseApiService{
 
     params = (filter ? params.set('filter', filter.toString()) : params);
 
-    return this.http.get<ExpressResponse>(`${this.apiUrl}/orders/getReports`, { params });
+    return this.http.get<ExpressResponse>(`${this.apiUrl}/orders/getReportsPerProduct`, { params });
   }
 }
