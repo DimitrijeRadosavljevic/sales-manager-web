@@ -6,6 +6,8 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Product } from 'src/app/_shared/models/product';
 import { Router } from '@angular/router';
 import {PaginatePipeArgs} from 'ngx-pagination/dist/paginate.pipe';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -23,6 +25,9 @@ export class ProductListComponent implements OnInit {
     currentPage: 1
   };
   public productForDelete: Product;
+  public filter: FormControl;
+  public filterFormGroup: FormGroup
+  private filterValue: string;
 
   constructor(private productService: ProductService, 
               private router: Router,
@@ -35,15 +40,15 @@ export class ProductListComponent implements OnInit {
 
   public initializeComponent() {
     this.getProducts();
+    this.buildFilter();
   }
 
   public getProducts() {
     this.loading++;
-    this.productService.getProducts(this.paginationConfig.itemsPerPage, this.paginationConfig.currentPage).subscribe(
+    this.productService.getProducts(this.paginationConfig.itemsPerPage, this.paginationConfig.currentPage, this.filterValue).subscribe(
       response => {
         this.paginationConfig.totalItems = response.data.total;
         this.products = response.data.products as Product[];
-        console.log(this.products);
       },
       error => { 
         console.log(error);
@@ -54,6 +59,21 @@ export class ProductListComponent implements OnInit {
 
   public goToEdit(product: Product) {
     this.router.navigate([`/products/${product._id}`]);
+  }
+
+  private buildFilter() {
+    this.filterFormGroup = new FormGroup({
+      filter: new FormControl()
+    })
+
+    this.filterFormGroup.valueChanges
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged())
+      .subscribe(value => {
+          this.filterValue = value.filter;
+          this.getProducts();
+      });
   }
 
   public onPageChange($event) {

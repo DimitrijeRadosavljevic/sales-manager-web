@@ -10,12 +10,15 @@ import { HttpParams } from '@angular/common/http';
 })
 export class ProductService extends BaseApiService {
 
-  public getProducts(perPage?: number | string, page?: number | string):Observable<ExpressResponse> {
+  public getProducts(perPage?: number | string, page?: number | string, filter?: string):Observable<ExpressResponse> {
     let params = new HttpParams();
       
     params = (perPage ? params.set('perPage', perPage.toString()) : params)
 
     params = (page ? params.set('page', page.toString()) : params);
+
+    params = (filter ? params.set('filter', filter.toString()) : params);
+
     return this.http.get<ExpressResponse>(`${this.apiUrl}/products`, { params });
   }
 
