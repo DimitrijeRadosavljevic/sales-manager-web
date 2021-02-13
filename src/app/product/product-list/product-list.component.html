@@ -22,7 +22,7 @@
         </thead>
         <tbody *ngIf="products && products.length>0 && loading == 0">
           <tr *ngFor="let product of products | paginate: paginationConfig; let i = index">
-            <th scope="row" class="align-items-center t-td">{{i+1}}</th>
+            <th scope="row" class="align-items-center t-td">{{(paginationConfig.currentPage - 1) * paginationConfig.itemsPerPage + i + 1}}</th>
             <th scope="row" class="text-center" ><img [src]="product.imagePath ? product.imagePath : '../assets/images/noimage.png'" alt="" height="70px" width="70px"></th>
             <td class="t-td text-center ">{{product.name}}</td>
             <td class="t-td text-center">{{product.code}}</td>
@@ -48,21 +48,4 @@
       </div>
     </div>
       
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-99" aria-hidden="true" *ngIf="productForDelete">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete this theme?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" (click)="onDeleteProduct()" data-dismiss="modal">Delete</button>
-      </div>
-    </div>
-  </div>
 </div>

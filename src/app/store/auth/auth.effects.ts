@@ -23,6 +23,11 @@ export class AuthEffects implements OnInitEffects {
       return this.authService.identify()
         .pipe(
           map(response => {
+            if(response.data.owner) {
+              this.router.navigate(['/employees'])
+            } else {
+              this.router.navigate(['/seller/work'])
+            }
             //this.router.navigate(['welcome']);
             return AuthActions.loginSuccess({data: response.data});
           }),

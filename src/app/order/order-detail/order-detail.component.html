@@ -1,1 +1,88 @@
-<p>order-detail works!</p>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-lg-12 d-flex justify-content-center">
+            <div class="order-details p-3" *ngIf="order && loading == 0">
+                <div class="row border-bottom pb-3 pt-1 h1">
+                    Order details
+                </div>
+                <div class="row border-bottom pb-3">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12 h2">
+                                User details
+                            </div>
+                            <div class="col-lg-12">
+                                First name: {{order.userDetail.name}}
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                                Last name: {{order.userDetail.lastName}}
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                                Email: {{order.userDetail.email}}
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                               Address: {{order.userDetail.address}}
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                                Phone: {{order.userDetail.phone}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-12 h2">
+                                Order details
+                            </div>
+                            <div class="col-lg-12">
+                                Status: <span [className] = "order.status ? 'text-success' : 'text-danger'">{{order.status ? 'Success' : 'Unsuccess'}}</span>
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                                Amount: {{order.amount | currency: 'RSD ':true:'3.3-3'}}
+                            </div>
+                            <div class="col-lg-12 pt-2">
+                                Date: {{order.date | date: 'short'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="row pt-2 border-bottom ">
+                        <div class="col-lg-1 text-center">#</div>
+                        <div class="col-lg-2 text-center h3">Name</div>
+                        <div class="col-lg-2 text-center h3">Code</div>
+                        <div class="col-lg-2 text-center h3">Dimensions</div>
+                        <div class="col-lg-1 text-center h3">Color</div>
+                        <div class="col-lg-1 text-center h3">Quantity</div>
+                        <div class="col-lg-1 text-center h3">Sale price</div>
+                        <div class="col-lg-2 text-center h3">Total price</div>
+                    </div>
+                    <div class="row pt-2 pb-1 border-bottom " *ngFor="let cardItem of order.cardItems;let i = index">
+                        <div class="col-lg-1 text-center">{{ i + 1}}</div>
+                        <div class="col-lg-2 text-center">{{cardItem.name}}</div>
+                        <div class="col-lg-2 text-center">{{cardItem.code}}</div>
+                        <div class="col-lg-2 text-center">{{cardItem.dimensions.x ? cardItem.dimensions.x  : '- '}} x {{cardItem.dimensions.y ? cardItem.dimensions.y  : '- '}} x {{cardItem.dimensions.z ? cardItem.dimensions.z : '-'}}</div>
+                        <div class="col-lg-1 text-center">{{cardItem.color}}</div>
+                        <div class="col-lg-1 text-center">{{cardItem.quantity}}</div>
+                        <div class="col-lg-1 text-center">{{cardItem.staffSalePrice | currency: 'RSD ':true:'3.3-3'}}</div>
+                        <div class="col-lg-2 text-center">{{ cardItem.staffSalePrice * cardItem.quantity | currency: 'RSD ':true:'3.3-3'}}</div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-11 h1 font-weight-bold d-flex justify-content-end mr-5">
+                        Total: {{order.amount | currency: 'RSD ':true:'3.3-3'}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 d-flex justify-content-end">
+                        <button class="btn btn-light" routerLink="/orders">Back</button>
+                    </div>
+                </div>
+            </div>
+            <div class="loading" *ngIf="!order && loading > 0">
+                <div class="col-1">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
