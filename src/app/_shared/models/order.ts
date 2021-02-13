@@ -5,7 +5,7 @@ export class Order {
 
     _id: string;
     userDetail:  userDetail
-    cardItems: cardItem [];
+    chartItems: cardItem [];
     amount: number;
     status: boolean;
     createdBy: string;

@@ -1,1 +1,157 @@
-<p>work works!</p>
+<div class="container-fluid p-5" *ngIf="!showChart">
+
+  <div class="row">
+    <div class="col-12">
+      <h1 class="cursor-pointer text-danger">
+        <i class="bi bi-cart3 text-danger" (click)="toggleChart(true)"></i> #{{ chartItems.length }}
+      </h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th scope="col" class="text-center">Image</th>
+          <th scope="col" class="text-center">Name</th>
+          <th scope="col" class="text-center">Code</th>
+          <th scope="col" class="text-center" >Color</th>
+          <th scope="col" class="text-center">Dimensions</th>
+          <th scope="col" class="text-center">Sale price</th>
+          <th scope="col" class="text-center">Sale type</th>
+          <th scope="col" class="text-center">Home delivery</th>
+          <th scope="col" class="text-center">Quantity</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody *ngIf="products && products.length>0 && loading == 0">
+        <tr *ngFor="let product of products | paginate: paginationConfig; let i = index">
+          <th scope="row" class="align-items-center t-td">{{i+1}}</th>
+          <th scope="row" class="text-center" ><img [src]="product.imagePath ? product.imagePath : '../assets/images/noimage.png'" alt="" height="70px" width="70px"></th>
+          <td class="t-td text-center ">{{product.name}}</td>
+          <td class="t-td text-center">{{product.code}}</td>
+          <td class="t-td text-center">{{product.color ? product.color : '#'}}</td>
+          <td class="t-td text-center">{{product.dimensions.x ? product.dimensions.x : '-'}} x {{product.dimensions.y ? product.dimensions.y : ' -'}} x {{product.dimensions.z ? product.dimensions.z : ' -'}}</td>
+          <td class="t-td text-center ">{{product.staffSalePrice}}</td>
+          <td class="t-td text-center ">{{product.staffSaleType}}</td>
+          <td class="t-td text-center ">{{product.homeDelivery ? 'Yes' : 'No'}}</td>
+          <td class="t-td text-center ">{{product.quantity}}</td>
+          <td class="t-td text-center " >
+            <button class="btn btn-danger" (click)="addToChart(product)" [disabled]="productInChart(product._id)">Add to chart <i class="bi bi-cart3 ms-2"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <p *ngIf="loading == 0 && products && products.length == 0" class="text-center">You don't have any products yet</p>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-5" *ngIf="loading > 0">
+    <div class="col-1">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <pagination-controls [id]="paginationConfig.id" (pageChange)="onPageChange($event)"></pagination-controls>
+    </div>
+  </div>
+
+</div>
+
+<div class="container" *ngIf="showChart">
+  <div class="row mt-5">
+    <div class="col-8 border border-3">
+      <h3>Chart ({{chartItems.length}}) items</h3>
+      <div class="row" *ngFor="let product of chartItems; index as i">
+        <div class="col-2 text-center">
+          <img [src]="product.imagePath ? product.imagePath : '../assets/images/noimage.png'" class="mb-3" alt="" height="70px" width="70px">
+        </div>
+        <div class="col-7">
+          <h3><b>{{ product.name}}</b></h3>
+          <label class="cursor-pointer" (click)="removeFromChart(product._id)">
+            <i class="bi bi-trash-fill"></i> Remove
+          </label>
+        </div>
+        <div class="col-3">
+          <div class="row">
+            <div class="col-12">
+              <h1>
+                <i class="bi bi-dash-square cursor-pointer" (click)="decrementCount(product._id)"></i>
+                ..{{ product['count'] }}..
+                <i class="bi bi-plus-square cursor-pointer" (click)="incrementCount(product._id)"></i>
+              </h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <h3>
+                <b>Price per item: {{ product.staffSalePrice }}€</b>
+              </h3>
+            </div>
+          </div>
+        </div>
+      <hr *ngIf="chartItems.length != i + 1">
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="row">
+        <div class="col-12">
+          <h2>Total price: {{ getTotalPrice() }}€</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <form [formGroup]="userDetailForm" (ngSubmit)="onCheckout()">
+            <h2>Buyer details</h2>
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': userDetailForm.controls.name.invalid && userDetailForm.controls.name.touched}"
+                     id="name" formControlName="name" placeholder="Name">
+              <div class="invalid-feedback">
+                Name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': userDetailForm.controls.lastName.invalid && userDetailForm.controls.lastName.touched}"
+                     id="lastName" formControlName="lastName" placeholder="Last Name">
+              <div class="invalid-feedback">
+                Last Name is required
+              </div>
+            </div>
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true, 'is-invalid': userDetailForm.controls.email.invalid && userDetailForm.controls.email.touched}"
+                     id="email" formControlName="email" placeholder="Email">
+              <div class="invalid-feedback">
+                Wrong format of email
+              </div>
+            </div>
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true}"
+                     id="address"
+                     formControlName="address"
+                     placeholder="Address">
+            </div>
+            <div class="mb-3">
+              <input type="text"
+                     [ngClass]="{'form-control': true}"
+                     id="phone"
+                     formControlName="phone"
+                     placeholder="Phone">
+            </div>
+            <div class="row">
+              <div class="col-12 text-center">
+                <button class="btn btn-danger">Checkout</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

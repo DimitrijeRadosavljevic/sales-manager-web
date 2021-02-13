@@ -56,15 +56,15 @@
                         <div class="col-lg-1 text-center h3">Sale price</div>
                         <div class="col-lg-2 text-center h3">Total price</div>
                     </div>
-                    <div class="row pt-2 pb-1 border-bottom " *ngFor="let cardItem of order.cardItems;let i = index">
+                    <div class="row pt-2 pb-1 border-bottom " *ngFor="let chartItem of order.chartItems;let i = index">
                         <div class="col-lg-1 text-center">{{ i + 1}}</div>
-                        <div class="col-lg-2 text-center">{{cardItem.name}}</div>
-                        <div class="col-lg-2 text-center">{{cardItem.code}}</div>
-                        <div class="col-lg-2 text-center">{{cardItem.dimensions.x ? cardItem.dimensions.x  : '- '}} x {{cardItem.dimensions.y ? cardItem.dimensions.y  : '- '}} x {{cardItem.dimensions.z ? cardItem.dimensions.z : '-'}}</div>
-                        <div class="col-lg-1 text-center">{{cardItem.color}}</div>
-                        <div class="col-lg-1 text-center">{{cardItem.quantity}}</div>
-                        <div class="col-lg-1 text-center">{{cardItem.staffSalePrice | currency: 'RSD ':true:'3.3-3'}}</div>
-                        <div class="col-lg-2 text-center">{{ cardItem.staffSalePrice * cardItem.quantity | currency: 'RSD ':true:'3.3-3'}}</div>
+                        <div class="col-lg-2 text-center">{{chartItem.name}}</div>
+                        <div class="col-lg-2 text-center">{{chartItem.code}}</div>
+                        <div class="col-lg-2 text-center">{{chartItem.dimensions.x ? chartItem.dimensions.x  : '- '}} x {{chartItem.dimensions.y ? chartItem.dimensions.y  : '- '}} x {{chartItem.dimensions.z ? chartItem.dimensions.z : '-'}}</div>
+                        <div class="col-lg-1 text-center">{{chartItem.color}}</div>
+                        <div class="col-lg-1 text-center">{{chartItem.quantity}}</div>
+                        <div class="col-lg-1 text-center">{{chartItem.staffSalePrice | currency: 'RSD ':true:'3.3-3'}}</div>
+                        <div class="col-lg-2 text-center">{{ chartItem.staffSalePrice * chartItem.quantity | currency: 'RSD ':true:'3.3-3'}}</div>
                     </div>
                 </div>
                 <div class="row mt-1">

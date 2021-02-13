@@ -55,7 +55,7 @@ export class EmployeeEditorComponent implements OnInit {
       firstName: [employee ? employee.firstName : null, [Validators.required]],
       middleName: [employee ? employee.middleName : null],
       lastName: [employee ? employee.lastName : null, [Validators.required]],
-      email: [employee ? employee.email : null, [Validators.required]],
+      email: [employee ? employee.email : null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
       confirmPassword: [null, Validators.required],
       employeeNumber: [employee ? employee.employeeNumber : null, [Validators.required]],
