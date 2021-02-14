@@ -1,13 +1,8 @@
+import { Seller } from './user-seller';
 export class ReportPerStaff {
-    _id: string;
-    name: string; 
-    code: string;
-    dimensions: { x: number, y: number, z: number}
-    color: string;
-    imagePath: any;
-    staffSalePrice: number;
-    staffSaleType: number;
-    quantity: number;
-    homeDelivery: boolean;
 
+    _id: string;
+    seller: Seller;
+    amount: number;
+    numberOfitems: number;
 }

@@ -16,7 +16,7 @@
       <div class="col-lg-12">
         <form [formGroup]="filterFormGroup">
           <label for="exampleInputEmail1" class="form-label">Filter</label>
-          <input type="email" class="form-control" id="filter" placeholder = "Name or code" formControlName="filter">
+          <input type="email" class="form-control" id="filter" placeholder = "Product name" formControlName="filter">
         </form>
       </div>
     </div>
@@ -24,31 +24,17 @@
           <thead class="table-primary">
             <tr>
               <th scope="col">#</th>
-              <th scope="col" class="text-center">Image</th>
-              <th scope="col" class="text-center">Name</th>
-              <th scope="col" class="text-center">Code</th>
-              <th scope="col" class="text-center" >Color</th>
-              <th scope="col" class="text-center">Dimensions</th>
-              <th scope="col" class="text-center">Sale price</th>
-              <th scope="col" class="text-center">Sale type</th>
-              <th scope="col" class="text-center">Home delivery</th>
-              <th scope="col" class="text-center">Quantity</th>
-              <th scope="col" class="text-center">Actions</th>
+              <th scope="col" class="text-center">Product Id</th>
+              <th scope="col" class="text-center">Product name</th>
+              <th scope="col" class="text-center">Number of sold items</th>
             </tr>
           </thead>
           <tbody *ngIf="reports && reports.length>0 && loading == 0">
             <tr *ngFor="let report of reports | paginate: paginationConfig; let i = index">
               <th scope="row" class="align-items-center t-td">{{(paginationConfig.currentPage - 1) * paginationConfig.itemsPerPage + i + 1}}</th>
-              <th scope="row" class="text-center" ></th>
-              <td class="t-td text-center "></td>
-              <td class="t-td text-center"></td>
-              <td class="t-td text-center"></td>
-              <td class="t-td text-center"></td>
-              <td class="t-td text-center "></td>
-              <td class="t-td text-center "></td>
-              <td class="t-td text-center "></td>
-              <td class="t-td text-center "></td>
-              <td class="t-td-action text-center"></td>
+              <td class="t-td text-center">{{report.productDetails.productId}}</td>
+              <td class="t-td text-center ">{{report.productDetails.productName}}</td>
+              <td class="t-td text-center">{{report.quantity}}</td>
             </tr>
           </tbody>
         </table>

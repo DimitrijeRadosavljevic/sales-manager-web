@@ -1,3 +1,4 @@
+import { Seller } from './user-seller';
 import { cardItem } from "./cardItem";
 import { userDetail } from "./userDetail";
 
@@ -8,7 +9,7 @@ export class Order {
     chartItems: cardItem [];
     amount: number;
     status: boolean;
-    createdBy: string;
+    seller: Seller
     ownerId: string;
     date: Date;
 }

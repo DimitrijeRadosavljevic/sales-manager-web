@@ -18,7 +18,7 @@ export class ReportService extends BaseApiService{
 
     params = (filter ? params.set('filter', filter.toString()) : params);
 
-    return this.http.get<ExpressResponse>(`${this.apiUrl}/orders/getReportsPerProduct`, { params });
+    return this.http.get<ExpressResponse>(`${this.apiUrl}/reports/getReportsPerProduct`, { params });
   }
 
   public fetchReportsPerStaff(perPage?: number | string, page?: number | string, filter?: string):Observable<ExpressResponse> {
@@ -30,6 +30,6 @@ export class ReportService extends BaseApiService{
 
     params = (filter ? params.set('filter', filter.toString()) : params);
 
-    return this.http.get<ExpressResponse>(`${this.apiUrl}/orders/getReportsPerProduct`, { params });
+    return this.http.get<ExpressResponse>(`${this.apiUrl}/reports/getReportsPerStaff`, { params });
   }
 }
