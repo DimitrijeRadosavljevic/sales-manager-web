@@ -140,6 +140,7 @@ export class WorkComponent implements OnInit {
       userDetail: this.userDetailForm.value,
       chartItems: this.chartItems.map(product => {
         return {
+          _id: product._id,
           name: product.name,
           code: product.code,
           staffSalePrice: product.staffSalePrice,
