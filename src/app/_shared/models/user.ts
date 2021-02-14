@@ -7,4 +7,5 @@ export class User {
   password: string;
   employeeNumber: number;
   role: string;
+  owner: boolean;
 }

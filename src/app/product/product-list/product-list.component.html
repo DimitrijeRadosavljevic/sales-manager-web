@@ -36,7 +36,7 @@
             <td class="t-td text-center">{{product.code}}</td>
             <td class="t-td text-center">{{product.color ? product.color : '#'}}</td>
             <td class="t-td text-center">{{product.dimensions.x ? product.dimensions.x : '-'}} x {{product.dimensions.y ? product.dimensions.y : ' -'}} x {{product.dimensions.z ? product.dimensions.z : ' -'}}</td>
-            <td class="t-td text-center ">{{product.staffSalePrice}}</td>
+            <td class="t-td text-center ">{{product.staffSalePrice | currency:'EUR':true:'3.3-3'}}</td>
             <td class="t-td text-center ">{{product.staffSaleType}}</td>
             <td class="t-td text-center ">{{product.homeDelivery ? 'Yes' : 'No'}}</td>
             <td class="t-td text-center ">{{product.quantity}}</td>

@@ -11,7 +11,15 @@ const routes: Routes = [
     component: OrderListComponent
   },
   {
+    path: 'seller',
+    component: OrderListComponent
+  },
+  {
     path: ':orderId',
+    component: OrderDetailComponent
+  },
+  {
+    path: ':orderId/seller',
     component: OrderDetailComponent
   }
 ]

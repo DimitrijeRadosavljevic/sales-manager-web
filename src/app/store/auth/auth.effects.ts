@@ -28,7 +28,7 @@ export class AuthEffects implements OnInitEffects {
             } else {
               this.router.navigate(['/seller/work'])
             }
-            //this.router.navigate(['welcome']);
+          
             return AuthActions.loginSuccess({data: response.data});
           }),
           catchError((error) => {

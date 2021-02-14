@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Order',
-      link: '/seller/order'
+      link: '/orders/seller'
     }
   ];
 

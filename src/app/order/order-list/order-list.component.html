@@ -22,8 +22,8 @@
               <td class="t-td text-center ">{{order.userDetail.name}}</td>
               <td class="t-td text-center">{{order.userDetail.lastName}}</td>
               <td class="t-td text-center">{{order.userDetail.email}}</td>
-              <td class="t-td text-center">{{order.amount | currency: 'RSD ':true:'3.3-3'}}</td>
-              <td class="t-td text-center" [className]="order.status ? 'text-success' : 'text-danger'">{{order.status ? 'Success' : 'Unsuccess'}}</td>
+              <td class="t-td text-center">{{order.amount | currency: 'EUR':true:'3.3-3'}}</td>
+              <td class="t-td" [className]="order.status ? 'text-success text-center' : 'text-danger text-center'">{{order.status ? 'Success' : 'Unsuccess'}}</td>
               <td class="t-td text-center "><i class="bi bi-eye text-info icon btn" data-toggle="tooltip" data-placement="top" title="See detail" (click)="goToDetail(order)"></i></td>
             </tr>
           </tbody>

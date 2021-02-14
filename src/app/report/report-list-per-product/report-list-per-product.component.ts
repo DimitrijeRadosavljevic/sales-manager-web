@@ -40,7 +40,7 @@ export class ReportListPerProductComponent implements OnInit {
 
   private fetchReports() {
     this.loading++;
-    this.reportService.fetchReports(this.paginationConfig.itemsPerPage, this.paginationConfig.currentPage, this.filterValue).subscribe(
+    this.reportService.fetchReportsPerProduct(this.paginationConfig.itemsPerPage, this.paginationConfig.currentPage, this.filterValue).subscribe(
       response => {
         this.paginationConfig.totalItems = response.data.total;
         this.reports = response.data.reports as ReportPerProduct[];

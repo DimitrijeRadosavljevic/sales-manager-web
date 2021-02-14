@@ -20,10 +20,10 @@
                             <div class="col-lg-12 pt-2">
                                 Email: {{order.userDetail.email}}
                             </div>
-                            <div class="col-lg-12 pt-2">
+                            <div class="col-lg-12 pt-2" *ngIf="order.userDetail.address">
                                Address: {{order.userDetail.address}}
                             </div>
-                            <div class="col-lg-12 pt-2">
+                            <div class="col-lg-12 pt-2" *ngIf="order.userDetail.phone">
                                 Phone: {{order.userDetail.phone}}
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                 Status: <span [className] = "order.status ? 'text-success' : 'text-danger'">{{order.status ? 'Success' : 'Unsuccess'}}</span>
                             </div>
                             <div class="col-lg-12 pt-2">
-                                Amount: {{order.amount | currency: 'RSD ':true:'3.3-3'}}
+                                Amount: {{order.amount | currency: 'EUR':true:'3.3-3'}}
                             </div>
                             <div class="col-lg-12 pt-2">
                                 Date: {{order.date | date: 'short'}}
@@ -63,18 +63,18 @@
                         <div class="col-lg-2 text-center">{{chartItem.dimensions.x ? chartItem.dimensions.x  : '- '}} x {{chartItem.dimensions.y ? chartItem.dimensions.y  : '- '}} x {{chartItem.dimensions.z ? chartItem.dimensions.z : '-'}}</div>
                         <div class="col-lg-1 text-center">{{chartItem.color}}</div>
                         <div class="col-lg-1 text-center">{{chartItem.quantity}}</div>
-                        <div class="col-lg-1 text-center">{{chartItem.staffSalePrice | currency: 'RSD ':true:'3.3-3'}}</div>
-                        <div class="col-lg-2 text-center">{{ chartItem.staffSalePrice * chartItem.quantity | currency: 'RSD ':true:'3.3-3'}}</div>
+                        <div class="col-lg-1 text-center">{{chartItem.staffSalePrice | currency: 'EUR':true:'3.3-3'}}</div>
+                        <div class="col-lg-2 text-center">{{ chartItem.staffSalePrice * chartItem.quantity | currency: 'EUR':true:'3.3-3'}}</div>
                     </div>
                 </div>
                 <div class="row mt-1">
                     <div class="col-lg-11 h1 font-weight-bold d-flex justify-content-end mr-5">
-                        Total: {{order.amount | currency: 'RSD ':true:'3.3-3'}}
+                        Total: {{order.amount | currency: 'EUR':true:'3.3-3'}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 d-flex justify-content-end">
-                        <button class="btn btn-light" routerLink="/orders">Back</button>
+                        <button class="btn btn-light" (click)="goBack()">Back</button>
                     </div>
                 </div>
             </div>

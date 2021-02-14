@@ -34,7 +34,7 @@
           <td class="t-td text-center">{{product.code}}</td>
           <td class="t-td text-center">{{product.color ? product.color : '#'}}</td>
           <td class="t-td text-center">{{product.dimensions.x ? product.dimensions.x : '-'}} x {{product.dimensions.y ? product.dimensions.y : ' -'}} x {{product.dimensions.z ? product.dimensions.z : ' -'}}</td>
-          <td class="t-td text-center ">{{product.staffSalePrice}}</td>
+          <td class="t-td text-center ">{{product.staffSalePrice | currency:'EUR':true:'3.3-3'}}</td>
           <td class="t-td text-center ">{{product.staffSaleType}}</td>
           <td class="t-td text-center ">{{product.homeDelivery ? 'Yes' : 'No'}}</td>
           <td class="t-td text-center ">{{product.quantity}}</td>
@@ -144,9 +144,14 @@
                      formControlName="phone"
                      placeholder="Phone">
             </div>
+            <div class="mb-3 pt-3 border-top">
+              <label for="status">Order status: - </label>
+              <input class="form-check-input" type="checkbox" value="" id="status" (click)="setOrderStatus()">
+            </div>
             <div class="row">
               <div class="col-12 text-center">
                 <button class="btn btn-danger">Checkout</button>
+                <button class="btn btn-light ml-2" (click)="toggleChart(false)">Back</button>
               </div>
             </div>
           </form>

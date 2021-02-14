@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from 'src/app/_shared/models/order';
 import { OrderService } from '../order.service';
+import {select, Store} from '@ngrx/store';
+import { State } from "../../store"
+import { authUser } from 'src/app/store/auth/auth.selectors';
 
 @Component({
   selector: 'app-order-detail',
@@ -14,7 +17,9 @@ export class OrderDetailComponent implements OnInit {
   private orderId: string;
   public loading: number = 0;
   constructor(private route: ActivatedRoute,
-              private orderService: OrderService) { }
+              private orderService: OrderService,
+              private store: Store<State>,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.initializeComponent();
@@ -41,6 +46,18 @@ export class OrderDetailComponent implements OnInit {
       },
       () => { this.loading--}
     )
+  }
+
+  public goBack() {
+    this.store.pipe(select(authUser)).subscribe(
+      user => {
+        if(user.owner) {
+          this.router.navigate(['orders'])
+          console.log("Owner");
+        } else {
+          this.router.navigate(['orders/seller'])
+        }
+    })
   }
 
 }

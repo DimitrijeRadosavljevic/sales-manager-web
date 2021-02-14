@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PaginatePipeArgs } from 'ngx-pagination/dist/paginate.pipe';
 
 import { Product } from '../../_shared/models/product';
@@ -27,6 +27,7 @@ export class WorkComponent implements OnInit {
   userDetailForm: FormGroup;
 
   public showChart: boolean = false;
+  public orderStatus: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private toastrService: ToastrService,
@@ -92,6 +93,11 @@ export class WorkComponent implements OnInit {
 
   public toggleChart(value): void {
     this.showChart = value;
+    this.userDetailForm.markAsUntouched();
+  }
+
+  public setOrderStatus() {
+    this.orderStatus = !this.orderStatus;
   }
 
   public getTotalPrice(): number {
@@ -126,6 +132,7 @@ export class WorkComponent implements OnInit {
 
   public onCheckout(): void {
     if (this.userDetailForm.invalid) {
+        this.userDetailForm.markAllAsTouched();
       return;
     }
 
@@ -142,7 +149,7 @@ export class WorkComponent implements OnInit {
         };
       }),
       amount: this.getTotalPrice(),
-      status: false
+      status: this.orderStatus
     };
 
     console.log(this.chartItems);

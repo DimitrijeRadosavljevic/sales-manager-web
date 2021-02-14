@@ -27,4 +27,13 @@ export class OrderService extends BaseApiService {
   public postOrder(order): Observable<ExpressResponse<Order>> {
     return this.http.post<ExpressResponse<Order>>(`${this.apiUrl}/orders`, order);
   }
+
+  public fetchSellerOrders(perPage?: number | string, page?: number | string): Observable<ExpressResponse> {
+    let params = new HttpParams();
+
+    params = (perPage ? params.set('perPage', perPage.toString()) : params);
+
+    params = (page ? params.set('page', page.toString()) : params);
+    return this.http.get<ExpressResponse>(`${this.apiUrl}/orders/seller`, { params });
+  }
 }
