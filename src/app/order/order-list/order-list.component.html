@@ -4,6 +4,14 @@
         Orders
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <form [formGroup]="filterFormGroup">
+          <label for="exampleInputEmail1" class="form-label">Filter</label>
+          <input type="email" class="form-control" id="filter" placeholder = "First name, last name or email" formControlName="filter">
+        </form>
+      </div>
+    </div>
       <table class="table mt-3">
           <thead class="table-primary">
             <tr>
@@ -23,7 +31,7 @@
               <td class="t-td text-center">{{order.userDetail.lastName}}</td>
               <td class="t-td text-center">{{order.userDetail.email}}</td>
               <td class="t-td text-center">{{order.amount | currency: 'EUR':true:'3.3-3'}}</td>
-              <td class="t-td" [className]="order.status ? 'text-success text-center' : 'text-danger text-center'">{{order.status ? 'Success' : 'Unsuccess'}}</td>
+              <td class="t-td text-center"><span [className]="order.status ? 'text-success order-status' : 'text-danger order-status'" data-toggle="tooltip" data-placement="top" title="Change Status" (click)="updateOrderStatus(order)">{{order.status ? 'Success' : 'Unsuccess'}}</span></td>
               <td class="t-td text-center "><i class="bi bi-eye text-info icon btn" data-toggle="tooltip" data-placement="top" title="See detail" (click)="goToDetail(order)"></i></td>
             </tr>
           </tbody>

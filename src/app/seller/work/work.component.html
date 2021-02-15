@@ -39,7 +39,7 @@
           <td class="t-td text-center ">{{product.homeDelivery ? 'Yes' : 'No'}}</td>
           <td class="t-td text-center ">{{product.quantity}}</td>
           <td class="t-td text-center " >
-            <button class="btn btn-danger" (click)="addToChart(product)" [disabled]="productInChart(product._id)">Add to chart <i class="bi bi-cart3 ms-2"></i></button>
+            <button class="btn btn-danger" (click)="addToChart(product)" [disabled]="productInChart(product._id) || product.quantity == 0">Add to chart <i class="bi bi-cart3 ms-2"></i></button>
           </td>
         </tr>
         </tbody>

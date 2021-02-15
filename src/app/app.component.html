@@ -1,11 +1,14 @@
 <mat-sidenav-container class="example-container h-100">
   <mat-sidenav #sidenav mode="side" [opened]="showSidebar" class="example-sidenav5" style="width: 200px" [fixedInViewport]="true">
-    <mat-list class="cursor-pointer">
+    <mat-list class="cursor-pointer d-flex flex-column h-100">
       <mat-list-item class="mt-3 mb-3 ps-3">
         <h2>Sales Manager</h2>
       </mat-list-item>
       <mat-list-item class="ps-3" [routerLink]="page.link" routerLinkActive="bg-primary text-white" *ngFor="let page of pages">{{ page.title }}</mat-list-item>
       <mat-list-item class="ps-3" routerLinkActive="bg-primary text-white" (click)="logout()">Logout</mat-list-item>
+      <mat-list-item class="margin-top-auto">
+        <p class="logo-text border-bottom border-primary">Developed & Designed by SabaliSoft</p>
+      </mat-list-item>
     </mat-list>
   </mat-sidenav>
 

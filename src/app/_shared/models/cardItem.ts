@@ -10,4 +10,5 @@ export class cardItem {
     };
     quantity: number;
     color: string;
+    newProductQuantity: number;
 }

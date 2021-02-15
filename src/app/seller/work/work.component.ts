@@ -146,7 +146,8 @@ export class WorkComponent implements OnInit {
           staffSalePrice: product.staffSalePrice,
           dimensions: product.dimensions,
           quantity: product['count'],
-          color: product.color
+          color: product.color,
+          newProductQuantity:product.quantity - product['count']
         };
       }),
       amount: this.getTotalPrice(),
@@ -162,6 +163,7 @@ export class WorkComponent implements OnInit {
         this.userDetailForm.reset();
         this.chartItems = [];
         this.toggleChart(false);
+        this.getProducts();
       },
       error => {
         this.toastrService.error('Error occurred, try again later');

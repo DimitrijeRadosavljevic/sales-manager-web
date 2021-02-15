@@ -6,7 +6,7 @@
   <div class="row mt-2 mb-2">
     <div class="col-12">
       <label>Filter</label>
-      <input type="text" [formControl]="filter" class="form-control">
+      <input type="text" [formControl]="filter" class="form-control" placeholder="Name, last name or middle name">
     </div>
   </div>
 
@@ -23,7 +23,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let employee of employees | paginate: paginationConfig; index as i">
-        <th scope="row">{{ paginationConfig.currentPage * i + 1 }}</th>
+        <th scope="row">{{ (paginationConfig.currentPage - 1) * paginationConfig.itemsPerPage + i + 1 }}</th>
         <td>{{ employee.employeeNumber }}</td>
         <td>{{ employee.firstName }}</td>
         <td>{{ employee.lastName }}</td>

@@ -11,12 +11,15 @@ import {Order} from '../_shared/models/order';
 })
 export class OrderService extends BaseApiService {
 
-  public fetchOrders(perPage?: number | string, page?: number | string): Observable<ExpressResponse> {
+  public fetchOrders(perPage?: number | string, page?: number | string,  filter?: string): Observable<ExpressResponse> {
     let params = new HttpParams();
 
     params = (perPage ? params.set('perPage', perPage.toString()) : params);
 
     params = (page ? params.set('page', page.toString()) : params);
+
+    params = (filter ? params.set('filter', filter.toString()) : params);
+
     return this.http.get<ExpressResponse>(`${this.apiUrl}/orders`, { params });
   }
 
@@ -28,12 +31,20 @@ export class OrderService extends BaseApiService {
     return this.http.post<ExpressResponse<Order>>(`${this.apiUrl}/orders`, order);
   }
 
-  public fetchSellerOrders(perPage?: number | string, page?: number | string): Observable<ExpressResponse> {
+  public fetchSellerOrders(perPage?: number | string, page?: number | string, filter?: string): Observable<ExpressResponse> {
     let params = new HttpParams();
 
     params = (perPage ? params.set('perPage', perPage.toString()) : params);
 
     params = (page ? params.set('page', page.toString()) : params);
+
+    params = (filter ? params.set('filter', filter.toString()) : params);
+
     return this.http.get<ExpressResponse>(`${this.apiUrl}/orders/seller`, { params });
+  }
+
+  public updateOrderStatus(order: Order): Observable<ExpressResponse> {
+    const newStatus: boolean = !order.status;
+    return this.http.patch<ExpressResponse>(`${this.apiUrl}/orders/${order._id}`, { newStatus });
   }
 }

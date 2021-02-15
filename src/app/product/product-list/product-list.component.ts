@@ -26,7 +26,7 @@ export class ProductListComponent implements OnInit {
   };
   public productForDelete: Product;
   public filter: FormControl;
-  public filterFormGroup: FormGroup
+  public filterFormGroup: FormGroup;
   private filterValue: string;
 
   constructor(private productService: ProductService, 
