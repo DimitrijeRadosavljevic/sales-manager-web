@@ -60,30 +60,19 @@
         </div>
 
         <div class="row">
-          <div class="col-3">
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password"a
-                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.password.invalid && form.controls.password.touched}"
-                     id="password" formControlName="password" placeholder="Password">
-              <div class="invalid-feedback">
-                Invalid password
-              </div>
-            </div>
-          </div>
+
 
           <div class="col-3">
             <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <input type="password"
-                     [ngClass]="{'form-control': true, 'is-invalid': (form.controls.confirmPassword.invalid || form.errors?.passwordsNotMatched) && form.controls.confirmPassword.touched }"
-                     id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
+              <label for="startedWorking" class="form-label">Started Working</label>
+              <input type="date"
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.startedWorking.invalid && form.controls.startedWorking.touched }"
+                     id="startedWorking" formControlName="startedWorking" placeholder="Started Working">
               <div class="invalid-feedback">
-                Password do not match
+                Started working is required
               </div>
             </div>
           </div>
-
 
           <div class="col-3">
             <div class="mb-3">
@@ -113,17 +102,30 @@
               </div>
             </div>
           </div>
+          
+          <div class="col-3" *ngIf="form.controls.password">
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password"a
+                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.password.invalid && form.controls.password.touched}"
+                     id="password" formControlName="password" placeholder="Password">
+              <div class="invalid-feedback">
+                Invalid password
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="row">
-          <div class="col-3">
+
+          <div class="col-3" *ngIf="form.controls.confirmPassword">
             <div class="mb-3">
-              <label for="startedWorking" class="form-label">Started Working</label>
-              <input type="date"
-                     [ngClass]="{'form-control': true, 'is-invalid': form.controls.startedWorking.invalid && form.controls.startedWorking.touched }"
-                     id="startedWorking" formControlName="startedWorking" placeholder="Started Working">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password"
+                     [ngClass]="{'form-control': true, 'is-invalid': (form.controls.confirmPassword.invalid || form.errors?.passwordsNotMatched) && form.controls.confirmPassword.touched }"
+                     id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm Password">
               <div class="invalid-feedback">
-                Started working is required
+                Password do not match
               </div>
             </div>
           </div>
@@ -137,8 +139,8 @@
             <button class="btn btn-outline-danger ml-5" type="button" (click)="addAddress()">Add Address</button>
           </div>
         </div>
-        <div class="row" *ngFor="let addressesForm of addressesForms.controls">
-          <div class="col">
+        <div class="row" *ngFor="let addressesForm of addressesForms.controls; index as i">
+          <div class="col-3">
             <div class="mb-3">
               <label class="form-label">Street</label>
               <input type="text"
@@ -146,7 +148,7 @@
                      [formControl]="addressesForm.get('street')">
             </div>
           </div>
-          <div class="col">
+          <div class="col-3">
             <div class="mb-3">
               <label class="form-label">City</label>
               <input type="text"
@@ -154,7 +156,7 @@
                      [formControl]="addressesForm.get('city')">
             </div>
           </div>
-          <div class="col">
+          <div class="col-3">
             <div class="mb-3">
               <label class="form-label">Country</label>
               <input type="text"
@@ -162,7 +164,7 @@
                      [formControl]="addressesForm.get('country')">
             </div>
           </div>
-          <div class="col">
+          <div class="col-2">
             <div class="mb-3">
               <label class="form-label">Postal Code</label>
               <input type="text"
@@ -170,9 +172,15 @@
                      [formControl]="addressesForm.get('postalCode')">
             </div>
           </div>
+          <div class="col-1 d-flex align-items-end" (click)="removeAddress(i)">
+            <div class="mb-3">
+              <button class="btn btn-danger">Remove</button>
+            </div>
+          </div>
           <div class="col-12" *ngIf="addressesForm.errors?.addressRequired">
             <p class="text-danger">Address is required</p>
           </div>
+
         </div>
 
         <hr>
@@ -183,8 +191,8 @@
             <button class="btn btn-outline-danger ml-5" type="button" (click)="addContact()">Add Contact</button>
           </div>
         </div>
-        <div class="row" *ngFor="let contactForm of contactsForms.controls">
-          <div class="col">
+        <div class="row" *ngFor="let contactForm of contactsForms.controls; index as i">
+          <div class="col-5">
             <div class="mb-3">
               <label class="form-label">Type</label>
               <select
@@ -198,7 +206,7 @@
               </div>
             </div>
           </div>
-          <div class="col">
+          <div class="col-6">
             <div class="mb-3">
               <label class="form-label">Value</label>
               <input type="text"
@@ -207,6 +215,11 @@
               <div class="invalid-feedback">
                 Value is required
               </div>
+            </div>
+          </div>
+          <div class="col-1 d-flex align-items-end" (click)="removeContact(i)">
+            <div class="mb-3">
+              <button class="btn btn-danger">Remove</button>
             </div>
           </div>
         </div>
@@ -220,7 +233,7 @@
             <button class="btn btn-outline-danger ml-5" type="button" (click)="addPromotion()">Add Promotion</button>
           </div>
         </div>
-        <div class="row" *ngFor="let promotionForm of promotionsForms.controls">
+        <div class="row" *ngFor="let promotionForm of promotionsForms.controls; index as i">
           <div class="col-3">
             <div class="mb-3">
               <label class="form-label">Date</label>
@@ -248,13 +261,16 @@
               </div>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-5">
             <label class="form-label">Note</label>
             <textarea rows="3"
                       [ngClass]="{'form-control': true, 'is-invalid': promotionForm.get('note').invalid && promotionForm.get('note').touched }"
                       [formControl]="promotionForm.get('note')" placeholder="Note">
 
             </textarea>
+          </div>
+          <div class="col-1 d-flex align-items-end" (click)="removePromotion(i)">
+            <button class="btn btn-danger">Remove</button>
           </div>
 
         </div>
@@ -268,7 +284,7 @@
             <button class="btn btn-outline-danger ml-5" type="button" (click)="addVacation()">Add Vacation</button>
           </div>
         </div>
-        <div class="row" *ngFor="let vacationForm of vacationsForms.controls">
+        <div class="row" *ngFor="let vacationForm of vacationsForms.controls; index as i">
           <div class="col-3">
             <div class="mb-3">
               <label class="form-label">From</label>
@@ -291,13 +307,16 @@
               </div>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-5">
             <label class="form-label">Note</label>
             <textarea rows="3"
                       [ngClass]="{'form-control': true, 'is-invalid': vacationForm.get('note').invalid && vacationForm.get('note').touched }"
                       [formControl]="vacationForm.get('note')" placeholder="Note">
 
             </textarea>
+          </div>
+          <div class="col-1 d-flex align-items-end" (click)="removeVacation(i)">
+            <button class="btn btn-danger">Remove</button>
           </div>
 
         </div>

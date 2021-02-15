@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -56,17 +56,21 @@ export class EmployeeEditorComponent implements OnInit {
       middleName: [employee ? employee.middleName : null],
       lastName: [employee ? employee.lastName : null, [Validators.required]],
       email: [employee ? employee.email : null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
-      confirmPassword: [null, Validators.required],
       employeeNumber: [employee ? employee.employeeNumber : null, [Validators.required]],
       role: [employee ? employee.role : 'junior', [Validators.required]],
-      startedWorking: [employee ? employee.startedWorking : new Date(), [Validators.required]],
+      startedWorking: [employee ? new Date(employee.startedWorking).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10), [Validators.required]],
 
       promotions: this.buildPromotionsForms(employee ? employee.promotions : []),
       vacations: this.buildVacationsForms(employee ? employee.vacations : []),
       contacts: this.buildContactsForms(employee ? employee.contacts : []),
       addresses: this.buildAddressesForms(employee ? employee.addresses : [])
-    }, { validators: this.passwordsMatch });
+    });
+
+    if (employee == null) {
+      this.form.addControl('password', new FormControl('', Validators.required));
+      this.form.addControl('confirmPassword', new FormControl('', Validators.required));
+      this.form.setValidators(this.passwordsMatch);
+    }
 
     this.formActive = true;
   }
@@ -88,7 +92,7 @@ export class EmployeeEditorComponent implements OnInit {
 
   private buildPromotionForm(promotion?: Promotion): FormGroup {
     return this.formBuilder.group({
-      date: [promotion ? promotion.date : new Date(), Validators.required],
+      date: [promotion ? new Date(promotion.date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10), Validators.required],
       newRole: [promotion ? promotion.newRole : 'junior', Validators.required],
       note: [promotion ? promotion.note : '']
     });
@@ -104,8 +108,8 @@ export class EmployeeEditorComponent implements OnInit {
 
   private buildVacationForm(vacation?: Vacation): FormGroup {
     return this.formBuilder.group({
-      from: [vacation ? vacation.from : null, Validators.required],
-      to: [vacation ? vacation.to : null, Validators.required],
+      from: [vacation ? new Date(vacation.from).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10), Validators.required],
+      to: [vacation ? new Date(vacation.to).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10), Validators.required],
       note: [vacation ? vacation.note : ''],
     });
   }
@@ -165,7 +169,7 @@ export class EmployeeEditorComponent implements OnInit {
           this.router.navigate([`/employees`]);
         },
         error => {
-          this.toastrService.error('Error has occurred, try again later');
+          this.toastrService.error('Account with this email already exists!');
         },
         () => this.loading--
       );
@@ -178,7 +182,7 @@ export class EmployeeEditorComponent implements OnInit {
           this.router.navigate([`/employees`]);
         },
         error => {
-          this.toastrService.error('Error has occurred, try again later');
+          this.toastrService.error('Account with this email already exists');
         },
         () => this.loading--
       );
@@ -203,9 +207,17 @@ export class EmployeeEditorComponent implements OnInit {
     this.promotionsForms.push(newPromotionForm);
   }
 
+  public removePromotion(index: number): void {
+    this.promotionsForms.controls = this.promotionsForms.controls.filter((form, i) => i !== index);
+  }
+
   public addAddress(): void {
     const newAddressForm = this.buildAddressForm();
     this.addressesForms.push(newAddressForm);
+  }
+
+  public removeAddress(index: number): void {
+    this.addressesForms.controls = this.addressesForms.controls.filter((form, i) => i !== index);
   }
 
   public addContact(): void {
@@ -213,8 +225,16 @@ export class EmployeeEditorComponent implements OnInit {
     this.contactsForms.push(newContactForm);
   }
 
+  public removeContact(index: number): void {
+    this.contactsForms.controls = this.contactsForms.controls.filter((form, i) => i !== index);
+  }
+
   public addVacation(): void {
     const newVacationForm = this.buildVacationForm();
     this.vacationsForms.push(newVacationForm);
+  }
+
+  public removeVacation(index: number): void {
+    this.vacationsForms.controls = this.vacationsForms.controls.filter((form, i) => i !== index);
   }
 }
